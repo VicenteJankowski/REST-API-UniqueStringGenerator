@@ -33,4 +33,18 @@ public class UserRequest {
         return true;
     }
 
+    public int possiblePermutations(){
+        int possiblePermutations = 0;
+
+        for(int strLen = minLength; strLen <= maxLength; strLen++){
+            possiblePermutations += (int) Math.pow(userChars.size(), strLen);
+        }
+
+        return possiblePermutations;
+    }
+
+    public boolean isPossibletoFindThatManyResults(){
+        return howManyWanted > possiblePermutations() ? false : true;
+    }
+
 }

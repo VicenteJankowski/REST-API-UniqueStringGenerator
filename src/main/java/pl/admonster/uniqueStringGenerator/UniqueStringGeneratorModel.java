@@ -51,13 +51,17 @@ public class UniqueStringGeneratorModel{
         return jdbcTemplate.update("UPDATE userRequests SET jobFinished=? WHERE id=?", status, requestId);
     }
 
-    public int proceedJob(UserRequest userRequest) {
+    public int proceedJob(UserRequest userRequest) throws Exception{
 
-        addUserRequestToDB(userRequest);
-        generateUniqueStrings(userRequest);
-        userRequest.setStatus(UserRequest.Status.FINISHED);
-        UniqueStringFileSupport.writeAllUniqueStringToFile(userRequest);
-        changeUserRequestStatusInDB(UserRequest.Status.FINISHED, userRequest.getId());
+            if(!userRequest.isPossibletoFindThatManyResults())
+                throw new Exception();
+
+            System.out.println("Liczba możliwych kombinacji=" + userRequest.possiblePermutations());
+            addUserRequestToDB(userRequest);
+            generateUniqueStrings(userRequest);
+            userRequest.setStatus(UserRequest.Status.FINISHED);
+            UniqueStringFileSupport.writeAllUniqueStringToFile(userRequest);
+            changeUserRequestStatusInDB(UserRequest.Status.FINISHED, userRequest.getId());
 
         return 1;
     }

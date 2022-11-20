@@ -13,10 +13,11 @@ public class UniqueStringGeneratorController {
 
     @PostMapping("/generate")
     public int startGeneration(@RequestBody UserRequest userRequest){
-        uniqueStringGeneratorModel.proceedJob(userRequest);
-
-        for (String uniqueString : userRequest.getGeneratedResult()) {
-            System.out.println(uniqueString);
+        try {
+            uniqueStringGeneratorModel.proceedJob(userRequest);
+        }
+        catch(Exception e){
+            System.out.println("Error: impossible to create that many results.");
         }
 
         return 1;
