@@ -1,10 +1,14 @@
 package pl.admonster.uniqueStringGenerator;
 
+import lombok.Data;
+
+@Data
 public class AppWorker implements Runnable{
 
     private final UserRequest userRequest;
     private final UserRequestRepository userRequestRepository;
     private UniqueStrGenerator uniqueStrGenerator;
+    public static final ThreadGroup UniqueStringGeneratorAction = new ThreadGroup("UniqueStringGeneratorAction");
     private Thread runner;
 
     AppWorker(UserRequest userRequest, UserRequestRepository userRequestRepository){
@@ -13,7 +17,7 @@ public class AppWorker implements Runnable{
         uniqueStrGenerator = new UniqueStrGenerator(userRequest.getId());
 
         if(runner == null){
-            runner = new Thread(this);
+            runner = new Thread(UniqueStringGeneratorAction, this);
             runner.start();
         }
     }

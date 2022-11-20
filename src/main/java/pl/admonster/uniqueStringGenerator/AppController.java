@@ -14,6 +14,11 @@ public class AppController {
     @Autowired
     AppModel appModel;
 
+    @GetMapping("/workingJobs")
+    public int getWorkingJobsCount(){
+        return AppWorker.UniqueStringGeneratorAction.activeCount();
+    }
+
     @PostMapping("/generate")
     public int startGeneration(@RequestBody ArrayList<UserRequest> userRequest){
         try {
