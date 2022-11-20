@@ -1,13 +1,27 @@
 package pl.admonster.uniqueStringGenerator;
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 
-@NoArgsConstructor
+@Data
+@RequiredArgsConstructor
 public class UniqueStrGenerator {
 
-    public static ArrayList<String> generate(UserRequest userRequest){
+    private final int requestId;
+    private ArrayList<String> generatedStr = new ArrayList<String>();
+    public boolean isNewStringUnique(String s){
+        for (String previousSingleUniqueString : getGeneratedStr()) {
+            if(previousSingleUniqueString.equals(s))
+                return false;
+        }
+
+        return true;
+    }
+
+    public int generate(UserRequest userRequest){
         StringBuilder strBuild;
         int strLen = 0;
         int randomCharIndex = 0;
@@ -21,12 +35,12 @@ public class UniqueStrGenerator {
                 strBuild.append(userRequest.getUserChars().get(randomCharIndex));
             }
 
-            if(userRequest.isNewStringUnique(strBuild.toString())) {
-                userRequest.getGeneratedResult().add(strBuild.toString());
+            if(isNewStringUnique(strBuild.toString())) {
+                generatedStr.add(strBuild.toString());
             }
         }
 
-        return userRequest.getGeneratedResult();
+        return 1;
     }
 
 }

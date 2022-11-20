@@ -24,15 +24,6 @@ public class UserRequest {
     private ArrayList<String> generatedResult = new ArrayList<String>();
     private int status = Status.NOT_STARTED;
 
-    public boolean isNewStringUnique(String s){
-        for (String previousSingleUniqueString : getGeneratedResult()) {
-            if(previousSingleUniqueString.equals(s))
-                return false;
-        }
-
-        return true;
-    }
-
     public int possiblePermutations(){
         int possiblePermutations = 0;
 
