@@ -51,7 +51,7 @@ public class UniqueStringGeneratorModel{
         return jdbcTemplate.update("UPDATE userRequests SET jobFinished=? WHERE id=?", status, requestId);
     }
 
-    public int startGeneration(UserRequest userRequest) {
+    public int proceedJob(UserRequest userRequest) {
 
         addUserRequestToDB(userRequest);
         generateUniqueStrings(userRequest);

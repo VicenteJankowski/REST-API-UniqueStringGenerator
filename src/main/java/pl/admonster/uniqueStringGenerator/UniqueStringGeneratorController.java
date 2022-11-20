@@ -13,7 +13,7 @@ public class UniqueStringGeneratorController {
 
     @PostMapping("/generate")
     public int startGeneration(@RequestBody UserRequest userRequest){
-        uniqueStringGeneratorModel.startGeneration(userRequest);
+        uniqueStringGeneratorModel.proceedJob(userRequest);
 
         for (String uniqueString : userRequest.getGeneratedResult()) {
             System.out.println(uniqueString);
