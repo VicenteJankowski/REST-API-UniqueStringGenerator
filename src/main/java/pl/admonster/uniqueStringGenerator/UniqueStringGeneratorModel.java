@@ -12,7 +12,7 @@ public class UniqueStringGeneratorModel{
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    public String userCharsToDB(ArrayList<Character> userChars){
+    public String parseUserCharsToDB(ArrayList<Character> userChars){
         StringBuilder str = new StringBuilder();
 
         userChars.forEach(userChar -> str.append(userChar + ","));
@@ -22,38 +22,42 @@ public class UniqueStringGeneratorModel{
     public int addUserRequestToDB(UserRequest userRequest){
         return jdbcTemplate.update("INSERT INTO userRequests(userChars, maxLength, minLength, howManyWanted, jobFinished) " +
                         "VALUES (?, ?, ?, ?, ?)",
-                        userCharsToDB(userRequest.getUserChars()),
+                        parseUserCharsToDB(userRequest.getUserChars()),
                         userRequest.getMaxLength(),
                         userRequest.getMinLength(),
                         userRequest.getHowManyWanted(),
-                        0
+                        UserRequest.Status.NOT_STARTED
                 );
+    }
+
+    public int changeUserRequestStatusInDB(boolean status, int requestId){
+        return jdbcTemplate.update("UPDATE userRequests SET jobFinished=? WHERE id=?", status, requestId);
     }
 
     public int startGeneration(UserRequest userRequest) {
 
         addUserRequestToDB(userRequest);
 
-        StringBuilder stringBuilder;
-        int stringLength = 0;
+        StringBuilder strBuild;
+        int strLen = 0;
         int randomCharIndex = 0;
 
         for(int i = 0; i < userRequest.getHowManyWanted(); i++){
-            stringBuilder = new StringBuilder();
-            boolean unique = true;
-            stringLength = userRequest.getMinLength() + (int) Math.round(Math.random() * (userRequest.getMaxLength() - userRequest.getMinLength()));
+            strBuild = new StringBuilder();
+            strLen = userRequest.getMinLength() + (int) Math.round(Math.random() * (userRequest.getMaxLength() - userRequest.getMinLength()));
 
-            for(int j = 0; j < stringLength; j++){
+            for(int j = 0; j < strLen; j++){
                 randomCharIndex = (int) Math.round(Math.random() * (userRequest.getUserChars().size() - 1));
-                stringBuilder.append(userRequest.getUserChars().get(randomCharIndex));
+                strBuild.append(userRequest.getUserChars().get(randomCharIndex));
             }
 
-            if(userRequest.isNewStringUnique(stringBuilder.toString())) {
-                userRequest.getGeneratedResult().add(stringBuilder.toString());
+            if(userRequest.isNewStringUnique(strBuild.toString())) {
+                userRequest.getGeneratedResult().add(strBuild.toString());
             }
         }
 
-        userRequest.setJobFinished(true);
+        userRequest.setStatus(UserRequest.Status.FINISHED);
+        //changeUserRequestStatusInDB(UserRequest.Status.FINISHED, userRequest.getId());
 
         return 1;
     }

@@ -9,6 +9,11 @@ import java.util.ArrayList;
 @Data
 @RequiredArgsConstructor
 public class UserRequest {
+    class Status {
+        public static final int NOT_STARTED = 0;
+        public static final int WORKING = 1;
+        public static final int FINISHED = 2;
+    }
 
     private int id;
     @NonNull private final ArrayList<Character> userChars;
@@ -17,7 +22,7 @@ public class UserRequest {
     @NonNull private final int howManyWanted;
 
     private ArrayList<String> generatedResult = new ArrayList<String>();
-    private boolean jobFinished = false;
+    private int status = Status.NOT_STARTED;
 
     public boolean isNewStringUnique(String s){
         for (String previousSingleUniqueString : getGeneratedResult()) {
