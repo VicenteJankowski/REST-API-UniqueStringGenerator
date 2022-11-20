@@ -56,6 +56,7 @@ public class UniqueStringGeneratorModel{
         addUserRequestToDB(userRequest);
         generateUniqueStrings(userRequest);
         userRequest.setStatus(UserRequest.Status.FINISHED);
+        UniqueStringFileSupport.writeAllUniqueStringToFile(userRequest);
         changeUserRequestStatusInDB(UserRequest.Status.FINISHED, userRequest.getId());
 
         return 1;
