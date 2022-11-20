@@ -1,15 +1,13 @@
 package pl.admonster.uniqueStringGenerator;
 
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 
 @NoArgsConstructor
-public class UniqueStringFileSupport {
+public class AppFileSupport {
 
     private final static String FILE_PREFIX = "job";
     private final static String FILE_EXTENSION = ".txt";

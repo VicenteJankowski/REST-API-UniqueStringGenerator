@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class UniqueStringGeneratorController {
+public class AppController {
 
     @Autowired
-    UniqueStringGeneratorModel uniqueStringGeneratorModel;
+    AppModel uniqueStringGeneratorModel;
 
     @PostMapping("/generate")
     public int startGeneration(@RequestBody UserRequest userRequest){
