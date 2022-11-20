@@ -54,7 +54,14 @@ public class UniqueStringGeneratorModel{
     public int startGeneration(UserRequest userRequest) {
 
         addUserRequestToDB(userRequest);
+        generateUniqueStrings(userRequest);
+        userRequest.setStatus(UserRequest.Status.FINISHED);
+        changeUserRequestStatusInDB(UserRequest.Status.FINISHED, userRequest.getId());
 
+        return 1;
+    }
+
+    public ArrayList<String> generateUniqueStrings(UserRequest userRequest){
         StringBuilder strBuild;
         int strLen = 0;
         int randomCharIndex = 0;
@@ -73,10 +80,7 @@ public class UniqueStringGeneratorModel{
             }
         }
 
-        userRequest.setStatus(UserRequest.Status.FINISHED);
-        changeUserRequestStatusInDB(UserRequest.Status.FINISHED, userRequest.getId());
-
-        return 1;
+        return userRequest.getGeneratedResult();
     }
 
 }
