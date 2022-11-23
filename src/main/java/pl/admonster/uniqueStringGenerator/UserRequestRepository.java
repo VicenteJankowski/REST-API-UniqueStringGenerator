@@ -17,14 +17,14 @@ public class UserRequestRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    public String parseUserCharsToDB(ArrayList<Character> userChars){
-        StringBuilder str = new StringBuilder();
+    public String parseUserCharsToDB(final ArrayList<Character> userChars) {
+        StringBuilder stringBuilder = new StringBuilder();
 
-        userChars.forEach(userChar -> str.append(userChar + ","));
+        userChars.forEach(userChar -> stringBuilder.append(userChar + ","));
 
-        return str.substring(0, str.length() - 1);
+        return stringBuilder.substring(0, stringBuilder.length() - 1);
     }
-    public int addUserRequestToDB(UserRequest userRequest){
+    public int addUserRequestToDB(final UserRequest userRequest) {
 
         GeneratedKeyHolder generatedKeyHolder = new GeneratedKeyHolder();
         String sql = "INSERT INTO userRequests(userChars, maxLength, minLength, howManyWanted, jobFinished) VALUES (?, ?, ?, ?, ?)";
@@ -44,12 +44,12 @@ public class UserRequestRepository {
         }, generatedKeyHolder);
 
         userRequest.setId(generatedKeyHolder.getKey().intValue());
-        System.out.println("USerRequestID=" + userRequest.getId());
+        System.out.println("UserRequestID=" + userRequest.getId());
 
         return 1;
     }
 
-    public int changeUserRequestStatusInDB(int status, int requestId){
+    public int changeUserRequestStatusInDB(final int status, final int requestId) {
         return jdbcTemplate.update("UPDATE userRequests SET jobFinished=? WHERE id=?", status, requestId);
     }
 }

@@ -7,12 +7,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 @NoArgsConstructor
-public class AppFileSupport {
+public class UniqueStringGeneratorFileSupport {
 
     private final static String FILE_PREFIX = "job";
     private final static String FILE_EXTENSION = ".txt";
 
-    public static int writeAllUniqueStringToFile(UserRequest userRequest){
+    public static int writeAllUniqueStringToFile(final UserRequest userRequest) {
         try {
             FileWriter fileWriter = new FileWriter(FILE_PREFIX + userRequest.getId() + FILE_EXTENSION);
             BufferedWriter buffFileWriter = new BufferedWriter(fileWriter);

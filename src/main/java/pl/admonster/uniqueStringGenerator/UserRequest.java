@@ -27,14 +27,14 @@ public class UserRequest {
     public int possiblePermutations(){
         int possiblePermutations = 0;
 
-        for(int strLen = minLength; strLen <= maxLength; strLen++){
+        for (int strLen = minLength; strLen <= maxLength; strLen++) {
             possiblePermutations += (int) Math.pow(userChars.size(), strLen);
         }
 
         return possiblePermutations;
     }
 
-    public boolean isPossibletoFindThatManyResults(){
+    public boolean isPossibletoFindThatManyResults() {
         return howManyWanted > possiblePermutations() ? false : true;
     }
 

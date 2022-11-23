@@ -3,7 +3,7 @@ package pl.admonster.uniqueStringGenerator;
 import lombok.Data;
 
 @Data
-public class AppWorker implements Runnable{
+public class UniqueStringGeneratorWorker implements Runnable {
 
     private final UserRequest userRequest;
     private final UserRequestRepository userRequestRepository;
@@ -11,12 +11,12 @@ public class AppWorker implements Runnable{
     public static final ThreadGroup UniqueStringGeneratorAction = new ThreadGroup("UniqueStringGeneratorAction");
     private Thread runner;
 
-    AppWorker(UserRequest userRequest, UserRequestRepository userRequestRepository){
+    UniqueStringGeneratorWorker(final UserRequest userRequest, final UserRequestRepository userRequestRepository) {
         this.userRequest = userRequest;
         this.userRequestRepository = userRequestRepository;
         uniqueStrGenerator = new UniqueStrGenerator(userRequest.getId());
 
-        if(runner == null){
+        if (runner == null) {
             runner = new Thread(UniqueStringGeneratorAction, this);
             runner.start();
         }
@@ -31,7 +31,7 @@ public class AppWorker implements Runnable{
         userRequest.setGeneratedResult(uniqueStrGenerator.getGeneratedStr());
         userRequest.setStatus(UserRequest.Status.FINISHED);
 
-        AppFileSupport.writeAllUniqueStringToFile(userRequest);
+        UniqueStringGeneratorFileSupport.writeAllUniqueStringToFile(userRequest);
         userRequestRepository.changeUserRequestStatusInDB(UserRequest.Status.FINISHED, userRequest.getId());
 
         System.out.println("Execution of job number " + userRequest.getId() + " is finished");
