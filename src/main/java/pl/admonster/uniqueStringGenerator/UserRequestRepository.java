@@ -2,6 +2,7 @@ package pl.admonster.uniqueStringGenerator;
 
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 @NoArgsConstructor
@@ -51,5 +53,11 @@ public class UserRequestRepository {
 
     public int changeUserRequestStatusInDB(final int status, final int requestId) {
         return jdbcTemplate.update("UPDATE userRequests SET jobFinished=? WHERE id=?", status, requestId);
+    }
+
+    public List<UserRequest> getFinishedJobsIdFromDB(){
+        return jdbcTemplate.query(
+                "SELECT id FROM userRequests WHERE jobFinished = " + UserRequest.Status.FINISHED,
+                BeanPropertyRowMapper.newInstance(UserRequest.class));
     }
 }
