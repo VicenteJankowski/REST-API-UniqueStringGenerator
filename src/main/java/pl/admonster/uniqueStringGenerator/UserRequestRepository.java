@@ -29,7 +29,7 @@ public class UserRequestRepository {
     public int addUserRequestToDB(final UserRequest userRequest) {
 
         GeneratedKeyHolder generatedKeyHolder = new GeneratedKeyHolder();
-        String sql = "INSERT INTO userRequests(userChars, maxLength, minLength, howManyWanted, jobFinished) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO userRequests(userChars, maxLength, minLength, howManyWanted, status) VALUES (?, ?, ?, ?, ?)";
 
         jdbcTemplate.update(conn -> {
 
@@ -52,12 +52,12 @@ public class UserRequestRepository {
     }
 
     public int changeUserRequestStatusInDB(final int status, final int requestId) {
-        return jdbcTemplate.update("UPDATE userRequests SET jobFinished=? WHERE id=?", status, requestId);
+        return jdbcTemplate.update("UPDATE userRequests SET status=? WHERE id=?", status, requestId);
     }
 
     public List<UserRequest> getFinishedJobsIdFromDB(){
         return jdbcTemplate.query(
-                "SELECT id FROM userRequests WHERE jobFinished = " + UserRequest.Status.FINISHED,
+                "SELECT id FROM userRequests WHERE status = " + UserRequest.Status.FINISHED,
                 BeanPropertyRowMapper.newInstance(UserRequest.class));
     }
 }
