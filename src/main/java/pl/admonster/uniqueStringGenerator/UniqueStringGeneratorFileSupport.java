@@ -15,10 +15,11 @@ public class UniqueStringGeneratorFileSupport {
     public final static String FILE_PREFIX = "job";
     public final static String FILE_EXTENSION = ".txt";
     public final static String RESULTS_NAME = "UniqueStringGenerator";
+    public final static String RESULT_FOLDER_PATH = ".\\target\\generated-sources\\";
 
     public static int writeAllUniqueStringToFile(final UserRequest userRequest) {
         try {
-            FileWriter fileWriter = new FileWriter(FILE_PREFIX + userRequest.getId() + FILE_EXTENSION);
+            FileWriter fileWriter = new FileWriter(RESULT_FOLDER_PATH + FILE_PREFIX + userRequest.getId() + FILE_EXTENSION);
             BufferedWriter buffFileWriter = new BufferedWriter(fileWriter);
 
             for(String singleUniqueString : userRequest.getGeneratedResult()){
@@ -33,14 +34,14 @@ public class UniqueStringGeneratorFileSupport {
         return 1;
     }
 
-    public static File createZipWithResults(final List<String> filePath) throws IOException {
+    public static File createZipWithResults(final List<String> finishedJobsId) throws IOException {
 
         File zipResults = new File(RESULTS_NAME + ".zip");
         FileOutputStream zipFileOut = new FileOutputStream(zipResults);
         ZipOutputStream zipOut = new ZipOutputStream(zipFileOut);
 
-        for (String singleFile : filePath) {
-            FileSystemResource resource = new FileSystemResource(singleFile);
+        for (String singleId : finishedJobsId) {
+            FileSystemResource resource = new FileSystemResource(RESULT_FOLDER_PATH + FILE_PREFIX + singleId + FILE_EXTENSION);
             if(!resource.exists()) continue;
 
             ZipEntry zipEntry = new ZipEntry(resource.getFilename());

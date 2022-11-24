@@ -38,11 +38,7 @@ public class UniqueStringGeneratorController {
         List<UserRequest> finshedUserRequest = userRequestRepository.getFinishedJobsIdFromDB();
         List<String> finishedJobsFilePath = new ArrayList<>();
 
-        finshedUserRequest.forEach(
-                userRequest -> finishedJobsFilePath.add(
-                        UniqueStringGeneratorFileSupport.FILE_PREFIX + userRequest.getId() + UniqueStringGeneratorFileSupport.FILE_EXTENSION
-                )
-        );
+        finshedUserRequest.forEach(userRequest -> finishedJobsFilePath.add(userRequest.getId() + ""));
 
         File zipResults = new File("");
 
