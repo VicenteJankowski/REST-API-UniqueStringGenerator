@@ -39,7 +39,7 @@ public class UserRequestRepository {
             preparedStatement.setInt(2, userRequest.getMaxLength());
             preparedStatement.setInt(3, userRequest.getMinLength());
             preparedStatement.setInt(4, userRequest.getHowManyWanted());
-            preparedStatement.setObject(5, UserRequest.Status.NOT_STARTED);
+            preparedStatement.setString(5, String.valueOf(UserRequest.Status.NOT_STARTED));
 
             return preparedStatement;
 
@@ -52,7 +52,7 @@ public class UserRequestRepository {
     }
 
     public int changeUserRequestStatusInDB(final UserRequest.Status status, final int requestId) {
-        return jdbcTemplate.update("UPDATE userRequests SET status=? WHERE id=?", status, requestId);
+        return jdbcTemplate.update("UPDATE userRequests SET status=? WHERE id=?", String.valueOf(status), requestId);
     }
 
     public List<UserRequest> getFinishedJobsIdFromDB(){

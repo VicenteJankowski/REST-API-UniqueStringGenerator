@@ -69,7 +69,9 @@ public class UniqueStringGeneratorController {
             }
         }
         catch (Exception e) {
-            System.out.println("Error: impossible to create that many results.");
+            System.out.println(e.getMessage());
+            System.out.println(e.getCause());
+            System.out.println(e.getStackTrace());
         }
 
         return 1;

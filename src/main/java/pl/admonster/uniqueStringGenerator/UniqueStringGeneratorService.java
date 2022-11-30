@@ -12,12 +12,12 @@ public class UniqueStringGeneratorService {
 
     UniqueStringGeneratorWorker uniqueStringGeneratorWorker;
 
-   public int proceedJob(final UserRequest userRequest) throws Exception {
+   public int proceedJob(final UserRequest userRequest) throws IllegalArgumentException {
 
         if (!userRequest.isPossibleToFindThatManyResults())
-            throw new Exception();
+            throw new IllegalArgumentException("Impossible to create that many results");
 
-        System.out.println("Liczba możliwych kombinacji=" + userRequest.possiblePermutations());
+        System.out.println("Number of possible variations=" + userRequest.possiblePermutations());
         userRequestRepository.addUserRequestToDB(userRequest);
 
         uniqueStringGeneratorWorker = new UniqueStringGeneratorWorker(userRequest, userRequestRepository);
