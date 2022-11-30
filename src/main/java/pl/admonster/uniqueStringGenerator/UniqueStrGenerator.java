@@ -10,7 +10,8 @@ import java.util.ArrayList;
 public class UniqueStrGenerator {
 
     private final int requestId;
-    private ArrayList<String> generatedStr = new ArrayList<String>();
+    private ArrayList<String> generatedStr = new ArrayList<>();
+
     public boolean isNewStringUnique(final String s) {
         for (String previousSingleUniqueString : getGeneratedStr()) {
             if (previousSingleUniqueString.equals(s))

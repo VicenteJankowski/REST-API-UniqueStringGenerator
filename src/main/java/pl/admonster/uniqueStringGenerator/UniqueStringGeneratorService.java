@@ -14,7 +14,7 @@ public class UniqueStringGeneratorService {
 
    public int proceedJob(final UserRequest userRequest) throws Exception {
 
-        if (!userRequest.isPossibletoFindThatManyResults())
+        if (!userRequest.isPossibleToFindThatManyResults())
             throw new Exception();
 
         System.out.println("Liczba możliwych kombinacji=" + userRequest.possiblePermutations());

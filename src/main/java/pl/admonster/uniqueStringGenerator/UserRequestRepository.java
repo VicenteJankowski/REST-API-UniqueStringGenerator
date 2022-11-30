@@ -51,7 +51,7 @@ public class UserRequestRepository {
         return 1;
     }
 
-    public int changeUserRequestStatusInDB(final int status, final int requestId) {
+    public int changeUserRequestStatusInDB(final UserRequest.Status status, final int requestId) {
         return jdbcTemplate.update("UPDATE userRequests SET status=? WHERE id=?", status, requestId);
     }
 

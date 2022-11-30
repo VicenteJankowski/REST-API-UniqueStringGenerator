@@ -11,11 +11,7 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @RequiredArgsConstructor
 public class UserRequest {
-    class Status {
-        public static final int NOT_STARTED = 0;
-        public static final int WORKING = 1;
-        public static final int FINISHED = 2;
-    }
+    enum Status { NOT_STARTED, WORKING, FINISHED }
 
     private int id;
     @NonNull private ArrayList<Character> userChars;
@@ -23,8 +19,8 @@ public class UserRequest {
     @NonNull private int minLength;
     @NonNull private int howManyWanted;
 
-    private ArrayList<String> generatedResult = new ArrayList<String>();
-    private int status = Status.NOT_STARTED;
+    private ArrayList<String> generatedResult = new ArrayList<>();
+    private Status status = Status.NOT_STARTED;
 
     public int possiblePermutations(){
         int possiblePermutations = 0;
@@ -36,8 +32,8 @@ public class UserRequest {
         return possiblePermutations;
     }
 
-    public boolean isPossibletoFindThatManyResults() {
-        return howManyWanted > possiblePermutations() ? false : true;
+    public boolean isPossibleToFindThatManyResults() {
+        return howManyWanted <= possiblePermutations();
     }
 
 }
