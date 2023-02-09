@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class UniqueStrGenerator {
 
     private final int requestId;
-    private ArrayList<String> generatedStr = new ArrayList<String>();
+    private ArrayList<String> generatedStr = new ArrayList<>();
     public boolean isNewStringUnique(final String s) {
         for (String previousSingleUniqueString : getGeneratedStr()) {
             if (previousSingleUniqueString.equals(s))
@@ -25,7 +25,7 @@ public class UniqueStrGenerator {
         int randomCharIndex = 0;
 
         for (int i = 0; i < userRequest.getHowManyWanted(); i++) {
-            final StringBuilder strBuild = new StringBuilder();
+            final StringBuffer strBuild = new StringBuffer();
             stringLength = userRequest.getMinLength() + (int) Math.round(Math.random() * (userRequest.getMaxLength() - userRequest.getMinLength()));
 
             for (int j = 0; j < stringLength; j++) {
